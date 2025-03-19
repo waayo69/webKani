@@ -1,0 +1,13 @@
+﻿@model webKani.Models.Item
+@{
+    ViewData["Title"] = "Delete";
+}
+<h3>Delete an Item</h3>
+<p>@Model.Name</p>
+<p>₱@Model.Price</p>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
