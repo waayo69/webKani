@@ -2,17 +2,28 @@
 @{
     ViewData["Title"] = "Create";
 }
-<h3>Create an Item</h3>
+<h3>Add a Book</h3>
 
 <form asp-action="Create" method="post">
     <div class="form-group">
-        <label for="Name">Name</label>
-        <input type="text" class="form-control" asp-for="Name" />
+        <label for="Title">Title</label>
+        <input type="text" class="form-control" asp-for="Title" />
+    </div>
+
+    <div class="form-group">
+        <label for="Author">Author</label>
+        <input type="text" class="form-control" asp-for="Author" />
+    </div>
+
+    <div class="form-group">
+        <label for="Genre">Genre</label>
+        <input type="text" class="form-control" asp-for="Genre" />
     </div>
 
     <div class="form-group">
         <label for="Price">Price</label>
         <input type="number" class="form-control" asp-for="Price" />
     </div>
+
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

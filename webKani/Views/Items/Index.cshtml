@@ -1,26 +1,99 @@
 ﻿@model List<webKani.Models.Item>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Items";
 }
-<h3>Index</h3>
-<table class="table">
-    <thread>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-        </tr>
-    </thread>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>₱ @item.Price.ToString("N2")</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<h2>Book List</h2>
+
+<!-- Search and Genre Filter -->
+<form method="get" class="mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <select name="genre" class="form-control" onchange="this.form.submit()">
+                <option value="">All Genres</option>
+                @foreach (var genre in ViewBag.Genres)
+                {
+                    <option value="@genre" selected="@(genre == ViewBag.SelectedGenre ? "selected" : null)">@genre</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6">
+            <input type="text" name="search" class="form-control" placeholder="Search by Title or Author" value="@ViewBag.SearchQuery" />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a asp-action="Index" class="btn btn-secondary">Reset</a>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <!-- Most Borrowed Books -->
+    <div class="col-md-4">
+        <h4>📚 Most Borrowed Books</h4>
+        <ul class="list-group">
+            @foreach (var book in ViewBag.MostBorrowed)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @book.Title
+                    <span class="badge bg-primary">@book.BorrowCount</span>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <!-- Book List -->
+    <div class="col-md-8">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Price</th>
+                    <th>Borrowed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.Genre</td>
+                        <td>@book.Price</td>
+                        <td>@book.BorrowCount</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-action="Borrow" asp-route-id="@book.Id" class="btn btn-success btn-sm">Borrow</a>
+                            <a asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<div class="row">
+    <div class="row-cols-3">
+        <table>
+            <tbody>
+                <tr>
+                    <td><a asp-action="ExportToPDF" class="btn btn-warning">Export to PDF</a></td>
+                    <td><a asp-action="ExportToExcel" class="btn btn-success me-2">Export to Excel</a></td>
+                    <td>
+                        <form asp-action="DeleteAll" method="post" onsubmit="return confirm('Are you sure you want to delete all books?');">
+                            <button type="submit" class="btn btn-danger">Delete All Books</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+

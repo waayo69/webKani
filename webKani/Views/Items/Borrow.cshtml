@@ -1,0 +1,19 @@
+﻿@model webKani.Models.Item
+@{
+    ViewData["Title"] = "Create";
+}
+<h2>Borrow Book</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.Title</h4>
+        <p class="card-text"><strong>Author:</strong> @Model.Author</p>
+        <p class="card-text"><strong>Genre:</strong> @Model.Genre</p>
+        <p class="card-text"><strong>Times Borrowed:</strong> @Model.BorrowCount</p>
+
+        <form asp-action="Borrow" asp-route-id="@Model.Id" method="post">
+            <button type="submit" class="btn btn-success">Confirm Borrow</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

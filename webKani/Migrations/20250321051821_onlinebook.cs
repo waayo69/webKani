@@ -5,24 +5,24 @@
 namespace webKani.Migrations
 {
     /// <inheritdoc />
-    public partial class SecondMigration : Migration
+    public partial class onlinebook : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<double>(
-                name: "Price",
+            migrationBuilder.AddColumn<int>(
+                name: "BorrowCount",
                 table: "Items",
-                type: "float",
+                type: "int",
                 nullable: false,
-                defaultValue: 0.0);
+                defaultValue: 0);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Price",
+                name: "BorrowCount",
                 table: "Items");
         }
     }
