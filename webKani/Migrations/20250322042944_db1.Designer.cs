@@ -11,8 +11,8 @@ using webKani.Data;
 namespace webKani.Migrations
 {
     [DbContext(typeof(MyAppContext))]
-    [Migration("20250321051821_onlinebook")]
-    partial class onlinebook
+    [Migration("20250322042944_db1")]
+    partial class db1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
