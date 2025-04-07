@@ -12,7 +12,10 @@
                 <option value="">All Genres</option>
                 @foreach (var genre in ViewBag.Genres)
                 {
-                    <option value="@genre" selected="@(genre == ViewBag.SelectedGenre ? "selected" : null)">@genre</option>
+                    var count = ViewBag.GenreCounts.ContainsKey(genre) ? ViewBag.GenreCounts[genre] : 0;
+                    <option value="@genre" selected="@(genre == ViewBag.SelectedGenre ? "selected" : null)">
+                        @genre (@count)
+                    </option>
                 }
             </select>
         </div>

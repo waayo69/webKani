@@ -92,15 +92,26 @@ namespace webKani.Controllers
             if (!string.IsNullOrEmpty(search))
                 books = books.Where(b => b.Title.Contains(search) || b.Author.Contains(search));
 
-            // Get top 5 most borrowed books
+            // Top 5 most borrowed
             ViewBag.MostBorrowed = await _context.Items.OrderByDescending(b => b.BorrowCount).Take(5).ToListAsync();
 
-            ViewBag.Genres = await _context.Items.Select(b => b.Genre).Distinct().ToListAsync();
+            // Genre list for dropdown
+            var genres = await _context.Items.Select(b => b.Genre).Distinct().ToListAsync();
+            ViewBag.Genres = genres;
             ViewBag.SelectedGenre = genre;
             ViewBag.SearchQuery = search;
 
+            // ✅ Add book count per genre
+            var genreCounts = await _context.Items
+                .GroupBy(i => i.Genre)
+                .Select(g => new { Genre = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(g => g.Genre, g => g.Count);
+
+            ViewBag.GenreCounts = genreCounts;
+
             return View(await books.ToListAsync());
         }
+
         public IActionResult Create()
         {
             return View();
